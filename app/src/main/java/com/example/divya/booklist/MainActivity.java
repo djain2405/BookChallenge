@@ -11,9 +11,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.divya.booklist.Database.AppDataBase;
+import com.example.divya.booklist.Database.Book;
+
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity implements AddBookFragment.OnBookAddedListener {
 
-private String bookName;
+    private String bookName;
+    private AppDataBase db;
+    private List<Book> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +28,8 @@ private String bookName;
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        db = AppDataBase.getAppDatabase(getApplicationContext());
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -32,6 +41,8 @@ private String bookName;
 
             }
         });
+
+
     }
 
     @Override
@@ -58,6 +69,12 @@ private String bookName;
 
     @Override
     public void onBookAdded(String bookName) {
+        Book newBook = new Book();
+        newBook.setBookName(bookName);
+        newBook.setRead(false);
+        db.bookDao().insert(newBook);
+        list = db.bookDao().getAll();
+        System.out.println("Books List" + list.size());
         Toast.makeText(getApplicationContext(), "Book Name Added is " + bookName, Toast.LENGTH_SHORT).show();
     }
 }

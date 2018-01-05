@@ -1,6 +1,9 @@
 package com.example.divya.booklist.Database;
 
+import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 
 /**
  * Created by divya on 1/2/2018.
@@ -26,7 +29,10 @@ public class Book {
         isRead = read;
     }
 
+    @PrimaryKey @NonNull
     String bookName;
+
+    @ColumnInfo
     boolean isRead;
 
 }
