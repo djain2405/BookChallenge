@@ -1,4 +1,4 @@
-package com.example.divya.booklist;
+package com.divya.readthemall;
 
 import org.junit.Test;
 

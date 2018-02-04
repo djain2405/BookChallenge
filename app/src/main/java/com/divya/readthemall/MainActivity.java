@@ -1,4 +1,4 @@
-package com.example.divya.booklist;
+package com.divya.readthemall;
 
 import android.app.DialogFragment;
 import android.os.Bundle;
@@ -9,18 +9,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
-import com.example.divya.booklist.Database.AppDataBase;
-import com.example.divya.booklist.Database.Book;
-
-import java.util.List;
-
-public class MainActivity extends AppCompatActivity implements AddBookFragment.OnBookAddedListener {
-
-    private String bookName;
-    private AppDataBase db;
-    private List<Book> list;
+public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,20 +19,17 @@ public class MainActivity extends AppCompatActivity implements AddBookFragment.O
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        db = AppDataBase.getAppDatabase(getApplicationContext());
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
 
-                AddBookFragment newFragment = new AddBookFragment();
-                newFragment.show(getSupportFragmentManager(), "Books");
-
+                SearchBookDialogFragment myfragment = SearchBookDialogFragment.newInstance(R.string.search_dialog_title);
+                myfragment.show(getFragmentManager(), "Books");
             }
         });
-
-
     }
 
     @Override
@@ -65,16 +52,5 @@ public class MainActivity extends AppCompatActivity implements AddBookFragment.O
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onBookAdded(String bookName) {
-        Book newBook = new Book();
-        newBook.setBookName(bookName);
-        newBook.setRead(false);
-        db.bookDao().insert(newBook);
-        list = db.bookDao().getAll();
-        System.out.println("Books List" + list.size());
-        Toast.makeText(getApplicationContext(), "Book Name Added is " + bookName, Toast.LENGTH_SHORT).show();
     }
 }

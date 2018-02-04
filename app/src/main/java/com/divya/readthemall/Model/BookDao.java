@@ -1,4 +1,4 @@
-package com.example.divya.booklist.Database;
+package com.divya.readthemall.Model;
 
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
@@ -7,7 +7,7 @@ import android.arch.persistence.room.Query;
 import java.util.List;
 
 /**
- * Created by divya on 1/2/2018.
+ * Created by divya on 2/4/2018.
  */
 
 @Dao
@@ -21,6 +21,4 @@ public interface BookDao {
 
     @Insert
     void insertAll(Book... books);
-
-
 }
