@@ -2,6 +2,7 @@ package com.divya.readthemall.Model;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 
 /**
  * Created by divya on 2/4/2018.
@@ -10,7 +11,7 @@ import android.arch.persistence.room.PrimaryKey;
 @Entity
 public class Book {
 
-    @PrimaryKey
+    @PrimaryKey @NonNull
     String BookTitle;
 
     public String getBookTitle() {
