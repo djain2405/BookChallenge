@@ -1,6 +1,7 @@
 package com.divya.readthemall;
 
 import android.app.DialogFragment;
+import android.content.Intent;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -30,8 +31,12 @@ public class MainActivity extends AppCompatActivity {
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
 
-                SearchBookDialogFragment myfragment = SearchBookDialogFragment.newInstance(R.string.search_dialog_title);
-                myfragment.show(getFragmentManager(), "Books");
+//                SearchBookDialogFragment myfragment = SearchBookDialogFragment.newInstance(R.string.search_dialog_title);
+//                myfragment.show(getFragmentManager(), "Books");
+
+                //Intent i = new Intent(getApplicationContext(), AddBookActivity.class);
+                startActivity(new Intent(getApplicationContext(), AddBookActivity.class));
+
 
             }
         });

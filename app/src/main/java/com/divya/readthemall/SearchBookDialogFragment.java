@@ -17,7 +17,7 @@ import android.widget.TextView;
  * Created by divya on 2/4/2018.
  */
 
-public class SearchBookDialogFragment extends DialogFragment implements DownloadCallback {
+public class SearchBookDialogFragment extends DialogFragment {
 
     private NetworkFragment networkFragment;
     private boolean isDownloading = false;
@@ -46,13 +46,13 @@ public class SearchBookDialogFragment extends DialogFragment implements Download
         builder.setPositiveButton(R.string.search, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                startDownload();
+  //              startDownload();
             }
         });
         builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                finishDownloading();
+//                finishDownloading();
             }
         });
         return builder.create();
@@ -67,40 +67,4 @@ public class SearchBookDialogFragment extends DialogFragment implements Download
         }
     }
 
-    @Override
-    public void updateFromDownload(String result) {
-
-        if (result != null) {
-            System.out.println("Divya Result" + result);
-        } else {
-            System.out.println("Divya Exception");
-        }
-
-    }
-
-    @Override
-    public NetworkInfo getActiveNetworkInfo() {
-
-        ConnectivityManager connectivityManager =
-                (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        return networkInfo;
-
-    }
-
-    @Override
-    public void onProgressUpdate(int progressCode, int percentComplete) {
-
-    }
-
-    @Override
-    public void finishDownloading() {
-
-        isDownloading = false;
-        if(networkFragment != null)
-        {
-            networkFragment.cancelDownload();
-        }
-
-    }
 }
