@@ -1,6 +1,8 @@
 package com.divya.readthemall;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -124,6 +126,7 @@ public class AddBookActivity extends FragmentActivity implements DownloadCallbac
      {
             db.bookDao().insert(book);
             Toast.makeText(this, "The book "+ book.getBookTitle() + " is saved to your reading list", Toast.LENGTH_LONG).show();
+            setResult(Activity.RESULT_OK);
             finish();
      }
 }
