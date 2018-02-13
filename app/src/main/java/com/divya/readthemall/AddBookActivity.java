@@ -11,6 +11,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.divya.readthemall.Model.AppDatabase;
+import com.divya.readthemall.Model.Book;
 
 /**
  * Created by divya on 2/6/2018.
@@ -20,8 +25,12 @@ public class AddBookActivity extends FragmentActivity implements DownloadCallbac
 
     private EditText addName;
     private Button search;
+    private TextView booktitle;
+    private TextView authorname;
+    private TextView didyoumean;
     private boolean isDownloading = false;
     private NetworkFragment networkFragment;
+    private AppDatabase db;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -30,9 +39,12 @@ public class AddBookActivity extends FragmentActivity implements DownloadCallbac
 
         addName = (EditText) findViewById(R.id.addBookName);
         search = (Button) findViewById(R.id.search);
+        db = AppDatabase.getAppDatabase(getApplicationContext());
+
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                System.out.println("Divya onClick called");
                 String bookname = addName.getText().toString();
                 startDownload(bookname);
             }
@@ -57,9 +69,10 @@ public class AddBookActivity extends FragmentActivity implements DownloadCallbac
     }
 
     @Override
-    public void updateFromDownload(String result) {
+    public void updateFromDownload(Book result) {
         if (result != null) {
-            System.out.println("Divya Result" + result);
+            System.out.println("Divya Result " + result);
+            displayBookName(result);
         } else {
             System.out.println("Divya Exception");
         }
@@ -86,4 +99,31 @@ public class AddBookActivity extends FragmentActivity implements DownloadCallbac
             networkFragment.cancelDownload();
         }
     }
+
+    void displayBookName(final Book book)
+    {
+        booktitle = (TextView) findViewById(R.id.booktitle);
+        authorname = (TextView) findViewById(R.id.author);
+        didyoumean = (TextView) findViewById(R.id.didyoumeantext);
+
+        booktitle.setText(book.getBookTitle());
+        authorname.setText(book.getAuthor());
+        booktitle.setVisibility(View.VISIBLE);
+        authorname.setVisibility(View.VISIBLE);
+        didyoumean.setVisibility(View.VISIBLE);
+
+        booktitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                savetoDb(book);
+            }
+        });
+    }
+
+     void savetoDb(Book book)
+     {
+            db.bookDao().insert(book);
+            Toast.makeText(this, "The book "+ book.getBookTitle() + " is saved to your reading list", Toast.LENGTH_LONG).show();
+            finish();
+     }
 }

@@ -9,6 +9,8 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.util.Xml;
 
+import com.divya.readthemall.Model.Book;
+
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -40,6 +42,12 @@ public class NetworkFragment extends Fragment {
             args.putString(URL_KEY, url);
             frag.setArguments(args);
             manager.beginTransaction().add(frag, TAG).commit();
+        }
+        else
+        {
+            Bundle args = new Bundle();
+            args.putString(URL_KEY, url);
+            frag.getArguments().putAll(args);
         }
 
         return frag;
@@ -90,8 +98,10 @@ public class NetworkFragment extends Fragment {
          * doInBackground().
          */
         class Result {
+            public Book bookObj;
             public String resultVal;
             public Exception exception;
+            public Result(Book obj){bookObj = obj;}
             public Result(String resultValue) {
                 resultVal = resultValue;
             }
@@ -127,9 +137,13 @@ public class NetworkFragment extends Fragment {
                 String urlString = urls[0];
                 try {
                     URL url = new URL(urlString);
-                    String resultString = downloadUrl(url);
-                    if (resultString != null) {
-                        result = new Result(resultString);
+//                    String resultString = downloadUrl(url);
+//                    if (resultString != null) {
+//                        result = new Result(resultString);
+                    Book bookObj = downloadUrl(url);
+                    if(bookObj != null)
+                    {
+                        result = new Result(bookObj);
                     } else {
                         throw new IOException("No response received.");
                     }
@@ -158,9 +172,14 @@ public class NetworkFragment extends Fragment {
         protected void onPostExecute(Result result) {
             if (result != null && callback != null) {
                 if (result.exception != null) {
-                    callback.updateFromDownload(result.exception.getMessage());
-                } else if (result.resultVal != null) {
-                    callback.updateFromDownload(result.resultVal);
+                    callback.updateFromDownload(null);
+               }
+// else if (result.resultVal != null) {
+//                    callback.updateFromDownload(result.resultVal);
+//                }
+                else if(result.bookObj != null)
+                {
+                    callback.updateFromDownload(result.bookObj);
                 }
                 callback.finishDownloading();
             }
@@ -178,10 +197,10 @@ public class NetworkFragment extends Fragment {
          * If the network request is successful, it returns the response body in String form. Otherwise,
          * it will throw an IOException.
          */
-        private String downloadUrl(URL url) throws IOException {
+        private Book downloadUrl(URL url) throws IOException {
             InputStream stream = null;
             HttpsURLConnection connection = null;
-            String result = null;
+            Book result = null;
             try {
                 connection = (HttpsURLConnection) url.openConnection();
                 // Timeout for reading InputStream arbitrarily set to 3000ms.
@@ -225,25 +244,31 @@ public class NetworkFragment extends Fragment {
         /**
          * Converts the contents of an InputStream to a String.
          */
-        private String readStream(InputStream stream) throws IOException, XmlPullParserException {
+        private Book readStream(InputStream stream) throws IOException, XmlPullParserException {
 
             String res="";
             XmlPullParser parser = Xml.newPullParser();
             parser.setInput(stream, null);
             int eventType = parser.getEventType();
             boolean done = false;
+            Book book = null;
             while(eventType != XmlPullParser.END_DOCUMENT && !done)
             {
+                //System.out.println("Divya check");
+
                 String name = null;
                 switch (eventType)
                 {
+                    //Book book = null;
                     case XmlPullParser.START_DOCUMENT:
+                        book = new Book();
                         break;
                     case XmlPullParser.START_TAG:
                         name = parser.getName();
                         if(name.equals("book"))
                         {
-                            res += "Book is ";
+
+                            //res += "Book is ";
                         }
                         else if(name.equals("id"))
                         {
@@ -251,12 +276,25 @@ public class NetworkFragment extends Fragment {
                         }
                         else if(name.equals("title"))
                         {
-                            res += " title is " + parser.nextText();
+                            book.setBookTitle(parser.nextText());
+                        }
+                        else if(name.equals("image_url"))
+                        {
+                            book.setImgUrl(parser.nextText());
+                        }
+                        else if(name.equals("description"))
+                        {
+                            book.setDescription(parser.nextText());
+                        }
+                        else if(name.equals("authors"))
+                        {
+                            String author = getAuthor(parser);
+                            book.setAuthor(author);
                         }
                         break;
                     case XmlPullParser.END_TAG:
                         name = parser.getName();
-                        if(name.equals("book"))
+                        if(name.equals("author"))
                         {
                             done = true;
                         }
@@ -264,8 +302,9 @@ public class NetworkFragment extends Fragment {
                 }
                 eventType = parser.next();
             }
-            System.out.println("Divya end result is " + res);
-            return res;
+            System.out.println("Divya end result is " + book.getBookTitle() + " " + book.getAuthor());
+
+            return book;
 //            String result = null;
 //            // Read InputStream using the UTF-8 charset.
 //            InputStreamReader reader = new InputStreamReader(stream, "UTF-8");
@@ -288,6 +327,23 @@ public class NetworkFragment extends Fragment {
 //                result = new String(buffer, 0, numChars);
 //            }
 //            return result;
+        }
+
+        String getAuthor(XmlPullParser parser) throws IOException, XmlPullParserException {
+            parser.require(XmlPullParser.START_TAG, null, "authors");
+
+            while(parser.next() != XmlPullParser.END_DOCUMENT)
+            {
+                if (parser.getEventType() != XmlPullParser.START_TAG) {
+                    continue;
+                }
+                String name = parser.getName();
+                if(name.equals("name"))
+                {
+                    return new String(parser.nextText());
+                }
+            }
+            return "";
         }
     }
 

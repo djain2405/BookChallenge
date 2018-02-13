@@ -2,6 +2,8 @@ package com.divya.readthemall;
 
 import android.net.NetworkInfo;
 
+import com.divya.readthemall.Model.Book;
+
 /**
  * Created by divya on 2/5/2018.
  */
@@ -16,7 +18,7 @@ public interface DownloadCallback {
         int PROCESS_INPUT_STREAM_SUCCESS=3;
     }
 
-    void updateFromDownload(String result);
+    void updateFromDownload(Book result);
 
     NetworkInfo getActiveNetworkInfo();
 

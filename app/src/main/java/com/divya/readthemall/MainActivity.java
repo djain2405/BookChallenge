@@ -11,17 +11,25 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+
+import com.divya.readthemall.Model.AppDatabase;
 
 public class MainActivity extends AppCompatActivity {
 
     private boolean isDownloading = false;
     private NetworkFragment networkFragment;
+    private TextView text;
+    private AppDatabase db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        text = (TextView) findViewById(R.id.testText);
+        db = AppDatabase.getAppDatabase(getApplicationContext());
+        text.setText(String.valueOf(db.bookDao().getAll().size()));
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
