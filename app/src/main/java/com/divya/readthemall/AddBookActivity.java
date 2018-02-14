@@ -19,6 +19,8 @@ import android.widget.Toast;
 import com.divya.readthemall.Model.AppDatabase;
 import com.divya.readthemall.Model.Book;
 
+import java.util.List;
+
 /**
  * Created by divya on 2/6/2018.
  */
@@ -33,6 +35,7 @@ public class AddBookActivity extends FragmentActivity implements DownloadCallbac
     private boolean isDownloading = false;
     private NetworkFragment networkFragment;
     private AppDatabase db;
+    private List<Book> bookList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -124,9 +127,13 @@ public class AddBookActivity extends FragmentActivity implements DownloadCallbac
 
      void savetoDb(Book book)
      {
+            bookList = db.bookDao().getAll();
+            bookList.add(book);
             db.bookDao().insert(book);
+            Intent i = new Intent();
+            i.putExtra("BOOK_ADDED", book);
             Toast.makeText(this, "The book "+ book.getBookTitle() + " is saved to your reading list", Toast.LENGTH_LONG).show();
-            setResult(Activity.RESULT_OK);
+            setResult(Activity.RESULT_OK, i);
             finish();
      }
 }

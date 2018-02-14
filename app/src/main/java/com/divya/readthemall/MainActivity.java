@@ -18,6 +18,8 @@ import android.widget.TextView;
 import com.divya.readthemall.Model.AppDatabase;
 import com.divya.readthemall.Model.Book;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity implements RecyclerItemTouchHelper.RecyclerItemTouchHelperListener {
 
     private boolean isDownloading = false;
@@ -28,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerItemTouch
     private BookAdapter adapter;
     private DividerItemDecoration decoration;
     private LinearLayoutManager manager;
-
+    private List<Book> booksData;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +42,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerItemTouch
         booklist = (RecyclerView) findViewById(R.id.booklist);
         manager = new LinearLayoutManager(this);
         booklist.setLayoutManager(manager);
-        adapter = new BookAdapter(db.bookDao().getAll());
+        booksData = db.bookDao().getAll();
+        adapter = new BookAdapter(booksData);
         booklist.setAdapter(adapter);
         decoration = new DividerItemDecoration(booklist.getContext(), manager.getOrientation());
         booklist.addItemDecoration(decoration);
@@ -75,6 +78,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerItemTouch
         {
             if(resultCode == Activity.RESULT_OK)
             {
+                booksData.add((Book)data.getExtras().getParcelable("BOOK_ADDED"));
                 adapter.notifyDataSetChanged();
             }
         }
