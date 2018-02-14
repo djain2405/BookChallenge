@@ -59,4 +59,18 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.MyViewHolder> 
             background = (RelativeLayout) itemView.findViewById(R.id.background);
         }
     }
+
+    public void removeItem(int position) {
+        mybooklist.remove(position);
+        // notify the item removed by position
+        // to perform recycler view delete animations
+        // NOTE: don't call notifyDataSetChanged()
+        notifyItemRemoved(position);
+    }
+
+    public void restoreItem(Book book, int position) {
+        mybooklist.add(position, book);
+        // notify item added by position
+        notifyItemInserted(position);
+    }
 }

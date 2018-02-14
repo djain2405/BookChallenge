@@ -2,8 +2,11 @@ package com.divya.readthemall;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -31,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerItemTouch
     private DividerItemDecoration decoration;
     private LinearLayoutManager manager;
     private List<Book> booksData;
+    private CoordinatorLayout coordinatorLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerItemTouch
         booklist.setAdapter(adapter);
         decoration = new DividerItemDecoration(booklist.getContext(), manager.getOrientation());
         booklist.addItemDecoration(decoration);
+        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinator);
 
         ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new RecyclerItemTouchHelper(0, ItemTouchHelper.RIGHT, this);
         new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(booklist);
@@ -111,11 +116,24 @@ public class MainActivity extends AppCompatActivity implements RecyclerItemTouch
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction, int position) {
         if(viewHolder instanceof BookAdapter.MyViewHolder)
         {
-            String name = db.bookDao().getAll().get(viewHolder.getAdapterPosition()).getBookTitle();
-            final Book deletedItem = db.bookDao().getAll().get(viewHolder.getAdapterPosition());
+            String name = booksData.get(viewHolder.getAdapterPosition()).getBookTitle();
+            final Book deletedItem = booksData.get(viewHolder.getAdapterPosition());
             final int deletedIndex = viewHolder.getAdapterPosition();
-            db.bookDao().getAll().remove(viewHolder.getAdapterPosition());
-            System.out.println("Divya size now " + db.bookDao().getAll().size());
+            adapter.removeItem(deletedIndex);
+            Snackbar snackbar = Snackbar.make(coordinatorLayout, name + " Moved to the Read List!", Snackbar.LENGTH_LONG );
+            snackbar.setAction("UNDO", new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    // undo is selected, restore the deleted item
+                    adapter.restoreItem(deletedItem, deletedIndex);
+                }
+            });
+            snackbar.setActionTextColor(Color.YELLOW);
+            snackbar.show();
+//            booksData.remove(viewHolder.getAdapterPosition());
+//            adapter.notifyDataSetChanged();
+//            System.out.println("Divya size now " + db.bookDao().getAll().size());
             // remove the item from recycler view
             //adapter.removeItem(viewHolder.getAdapterPosition());
 
