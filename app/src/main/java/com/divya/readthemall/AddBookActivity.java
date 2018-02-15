@@ -129,11 +129,18 @@ public class AddBookActivity extends FragmentActivity implements DownloadCallbac
      {
             bookList = db.bookDao().getAll();
             bookList.add(book);
-            db.bookDao().insert(book);
-            Intent i = new Intent();
-            i.putExtra("BOOK_ADDED", book);
-            Toast.makeText(this, "The book "+ book.getBookTitle() + " is saved to your reading list", Toast.LENGTH_LONG).show();
-            setResult(Activity.RESULT_OK, i);
+            if(db.bookDao().findBookByTitle(book.getBookTitle()) == null) {
+                db.bookDao().insert(book);
+                Intent i = new Intent();
+                i.putExtra("BOOK_ADDED", book);
+                Toast.makeText(this, "The book " + book.getBookTitle() + " is saved to your reading list", Toast.LENGTH_LONG).show();
+                setResult(Activity.RESULT_OK, i);
+            }
+            else
+            {
+                Toast.makeText(this, "The book " + book.getBookTitle() + " is already in your reading list", Toast.LENGTH_LONG).show();
+            }
+
             finish();
      }
 }

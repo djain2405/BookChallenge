@@ -55,8 +55,10 @@ public class MainActivity extends AppCompatActivity implements RecyclerItemTouch
         booklist.addItemDecoration(decoration);
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinator);
 
-        ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new RecyclerItemTouchHelper(0, ItemTouchHelper.RIGHT, this);
+        ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new RecyclerItemTouchHelper(0, ItemTouchHelper.RIGHT , this);
         new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(booklist);
+
+
         //text.setText(String.valueOf(db.bookDao().getAll().size()));
 
 
@@ -132,7 +134,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerItemTouch
 
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction, int position) {
-        if(viewHolder instanceof BookAdapter.MyViewHolder)
+        if(viewHolder instanceof BookAdapter.MyViewHolder && direction == ItemTouchHelper.RIGHT)
         {
             String name = booksData.get(viewHolder.getAdapterPosition()).getBookTitle();
             final Book deletedItem = booksData.get(viewHolder.getAdapterPosition());
@@ -141,7 +143,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerItemTouch
             Book deletedBook = db.bookDao().findBookByTitle(deletedItem.getBookTitle());
             deletedBook.setRead(true);
             db.bookDao().update(deletedBook);
-            Snackbar snackbar = Snackbar.make(coordinatorLayout, name + " Moved to the Read List!", Snackbar.LENGTH_LONG );
+            Snackbar snackbar = Snackbar.make(coordinatorLayout, name + " Yay! You read this one!", Snackbar.LENGTH_LONG );
             snackbar.setAction("UNDO", new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -162,5 +164,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerItemTouch
             //adapter.removeItem(viewHolder.getAdapterPosition());
 
         }
+
     }
 }
