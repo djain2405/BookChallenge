@@ -43,10 +43,12 @@ public class MainActivity extends AppCompatActivity implements RecyclerItemTouch
         setSupportActionBar(toolbar);
         //text = (TextView) findViewById(R.id.testText);
         db = AppDatabase.getAppDatabase(getApplicationContext());
+
         booklist = (RecyclerView) findViewById(R.id.booklist);
         manager = new LinearLayoutManager(this);
         booklist.setLayoutManager(manager);
-        booksData = db.bookDao().getAll();
+        booksData = db.bookDao().getAllUnreadBooks();
+
         adapter = new BookAdapter(booksData, this);
         booklist.setAdapter(adapter);
         decoration = new DividerItemDecoration(booklist.getContext(), manager.getOrientation());
@@ -120,6 +122,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerItemTouch
             final Book deletedItem = booksData.get(viewHolder.getAdapterPosition());
             final int deletedIndex = viewHolder.getAdapterPosition();
             adapter.removeItem(deletedIndex);
+            Book deletedBook = db.bookDao().findBookByTitle(deletedItem.getBookTitle());
+            deletedBook.setRead(true);
+            db.bookDao().update(deletedBook);
             Snackbar snackbar = Snackbar.make(coordinatorLayout, name + " Moved to the Read List!", Snackbar.LENGTH_LONG );
             snackbar.setAction("UNDO", new View.OnClickListener() {
                 @Override
@@ -127,6 +132,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerItemTouch
 
                     // undo is selected, restore the deleted item
                     adapter.restoreItem(deletedItem, deletedIndex);
+                    Book temp = db.bookDao().findBookByTitle(deletedItem.getBookTitle());
+                    temp.setRead(false);
+                    db.bookDao().update(temp);
                 }
             });
             snackbar.setActionTextColor(Color.YELLOW);

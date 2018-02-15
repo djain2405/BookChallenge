@@ -262,6 +262,7 @@ public class NetworkFragment extends Fragment {
                     //Book book = null;
                     case XmlPullParser.START_DOCUMENT:
                         book = new Book();
+                        book.setRead(false);
                         break;
                     case XmlPullParser.START_TAG:
                         name = parser.getName();
