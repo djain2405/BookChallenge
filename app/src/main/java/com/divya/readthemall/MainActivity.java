@@ -69,9 +69,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerItemTouch
 //                myfragment.show(getFragmentManager(), "Books");
 
 
-                Intent i = new Intent(getApplicationContext(), BookDetailsActivity.class);
-                startActivity(i);
-                //startActivityForResult(new Intent(getApplicationContext(), AddBookActivity.class), 1);
+                startActivityForResult(new Intent(getApplicationContext(), AddBookActivity.class), 1);
 
 
             }

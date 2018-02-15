@@ -25,7 +25,7 @@
             android:id="@+id/bookimage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorAccent"
+            android:background="@android:color/darker_gray"
             />
 
         <android.support.v7.widget.Toolbar
@@ -43,6 +43,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/fab_margin"
+        android:layout_marginBottom="@dimen/fab_margin"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <RelativeLayout
