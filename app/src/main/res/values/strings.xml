@@ -7,4 +7,7 @@
     <string name="search_dialog_title">Search for a Book!</string>
     <string name="did_you_mean">Did you mean?</string>
     <string name="book_moved_text">Book moved to the Read list!</string>
+    <string name="share">Share</string>
+    <string name="sharing_title">Hey! Checkout these books, awesome read!</string>
+
 </resources>

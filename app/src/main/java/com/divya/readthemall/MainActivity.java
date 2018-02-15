@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerItemTouch
         setSupportActionBar(toolbar);
         //text = (TextView) findViewById(R.id.testText);
         db = AppDatabase.getAppDatabase(getApplicationContext());
-
+        System.out.println("Divya getdatabase size " + db.bookDao().getAll().size());
         booklist = (RecyclerView) findViewById(R.id.booklist);
         manager = new LinearLayoutManager(this);
         booklist.setLayoutManager(manager);
@@ -108,6 +108,22 @@ public class MainActivity extends AppCompatActivity implements RecyclerItemTouch
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        }
+        else if(id == R.id.action_share)
+        {
+            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+            shareIntent.setType("text/plain");
+            StringBuilder sb = new StringBuilder();
+            sb.append(getResources().getString(R.string.sharing_title));
+            for(Book b : booksData)
+            {
+                sb.append("\n"+b.getBookTitle()+" By "+b.getAuthor());
+            }
+            shareIntent.putExtra(Intent.EXTRA_TEXT, sb.toString());
+
+            startActivity(Intent.createChooser(shareIntent, "Choose how to share!"));
+            return true;
+            //shareIntent.putParcelableArrayListExtra("My BookList", booksData);
         }
 
         return super.onOptionsItemSelected(item);
