@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerItemTouch
         manager = new LinearLayoutManager(this);
         booklist.setLayoutManager(manager);
         booksData = db.bookDao().getAll();
-        adapter = new BookAdapter(booksData);
+        adapter = new BookAdapter(booksData, this);
         booklist.setAdapter(adapter);
         decoration = new DividerItemDecoration(booklist.getContext(), manager.getOrientation());
         booklist.addItemDecoration(decoration);
@@ -68,8 +68,10 @@ public class MainActivity extends AppCompatActivity implements RecyclerItemTouch
 //                SearchBookDialogFragment myfragment = SearchBookDialogFragment.newInstance(R.string.search_dialog_title);
 //                myfragment.show(getFragmentManager(), "Books");
 
-                //Intent i = new Intent(getApplicationContext(), AddBookActivity.class);
-                startActivityForResult(new Intent(getApplicationContext(), AddBookActivity.class), 1);
+
+                Intent i = new Intent(getApplicationContext(), BookDetailsActivity.class);
+                startActivity(i);
+                //startActivityForResult(new Intent(getApplicationContext(), AddBookActivity.class), 1);
 
 
             }

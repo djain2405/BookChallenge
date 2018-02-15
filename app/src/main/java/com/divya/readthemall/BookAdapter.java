@@ -1,5 +1,7 @@
 package com.divya.readthemall;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,9 +19,11 @@ import java.util.List;
 
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.MyViewHolder> {
     private List<Book> mybooklist;
-    public BookAdapter(List<Book> booklist)
+    private Context context;
+    public BookAdapter(List<Book> booklist, Context context)
     {
         mybooklist = booklist;
+        this.context = context;
         System.out.println("Divya " + mybooklist.size());
     }
 
@@ -34,8 +38,16 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.MyViewHolder> 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
-        Book b = mybooklist.get(position);
+        final Book b = mybooklist.get(position);
         holder.title.setText(b.getBookTitle());
+        holder.title.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(context, BookDetailsActivity.class);
+                i.putExtra("BOOK_VAL", b);
+                context.startActivity(i);
+            }
+        });
         holder.author.setText(b.getAuthor());
 
     }
