@@ -41,7 +41,7 @@ public class AddBookActivity extends FragmentActivity implements DownloadCallbac
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_activity_layout);
-
+        setTitle(getResources().getString(R.string.add_title));
         addName = (EditText) findViewById(R.id.addBookName);
         search = (Button) findViewById(R.id.search);
         db = AppDatabase.getAppDatabase(getApplicationContext());
@@ -112,7 +112,7 @@ public class AddBookActivity extends FragmentActivity implements DownloadCallbac
         didyoumean = (TextView) findViewById(R.id.didyoumeantext);
 
         booktitle.setText(book.getBookTitle());
-        authorname.setText(book.getAuthor());
+        authorname.setText("By "+book.getAuthor());
         booktitle.setVisibility(View.VISIBLE);
         authorname.setVisibility(View.VISIBLE);
         didyoumean.setVisibility(View.VISIBLE);

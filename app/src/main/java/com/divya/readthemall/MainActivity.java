@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -43,7 +44,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerItemTouch
         setSupportActionBar(toolbar);
         //text = (TextView) findViewById(R.id.testText);
         db = AppDatabase.getAppDatabase(getApplicationContext());
-        System.out.println("Divya getdatabase size " + db.bookDao().getAll().size());
         booklist = (RecyclerView) findViewById(R.id.booklist);
         manager = new LinearLayoutManager(this);
         booklist.setLayoutManager(manager);
@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerItemTouch
         adapter = new BookAdapter(booksData, this);
         booklist.setAdapter(adapter);
         decoration = new DividerItemDecoration(booklist.getContext(), manager.getOrientation());
+        decoration.setDrawable(ContextCompat.getDrawable(this, R.drawable.divider_line));
         booklist.addItemDecoration(decoration);
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinator);
 
@@ -143,8 +144,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerItemTouch
             Book deletedBook = db.bookDao().findBookByTitle(deletedItem.getBookTitle());
             deletedBook.setRead(true);
             db.bookDao().update(deletedBook);
-            Snackbar snackbar = Snackbar.make(coordinatorLayout, name + " Yay! You read this one!", Snackbar.LENGTH_LONG );
-            snackbar.setAction("UNDO", new View.OnClickListener() {
+            Snackbar snackbar = Snackbar.make(coordinatorLayout, getResources().getString(R.string.snackbar_text, name), Snackbar.LENGTH_LONG );
+            snackbar.setAction(getResources().getString(R.string.undo), new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 

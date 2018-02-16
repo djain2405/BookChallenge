@@ -13,9 +13,8 @@
             android:id="@+id/movereadText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textSize="28sp"
-            android:textColor="@android:color/darker_gray"
-            android:textAlignment="center"
+            android:textSize="24sp"
+            android:textColor="@android:color/white"
             android:layout_centerInParent="true"
             android:textStyle="bold"
             android:text="@string/book_moved_text"/>
@@ -29,10 +28,9 @@
         android:id="@+id/booktitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="28sp"
-        app:layout_constraintLeft_toLeftOf="parent"
+        android:textSize="24sp"
         android:layout_marginLeft="@dimen/fab_margin"
-        android:textColor="@android:color/darker_gray"
+        android:textColor="@android:color/holo_purple"
         android:textStyle="bold"/>
 
 
@@ -40,10 +38,10 @@
         android:id="@+id/author"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="24sp"
+        android:textSize="20sp"
         android:layout_below="@+id/booktitle"
         android:layout_marginLeft="@dimen/fab_margin"
-        android:textColor="@android:color/holo_red_dark"/>
+        android:textColor="@android:color/darker_gray"/>
     </RelativeLayout>
 
 

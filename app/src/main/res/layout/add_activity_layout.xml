@@ -4,10 +4,63 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".AddBookActivity">
 
+    <TextView
+        android:id="@+id/findbooktext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/fab_margin"
+        android:text="@string/find_book_text"
+        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="@dimen/fab_margin"
+        android:layout_marginRight="@dimen/fab_margin"
+        />
+    <EditText
+        android:id="@+id/addBookName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="56sp"
+        android:hint="@string/enter_book_name_hint"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/findbooktext"
+        android:layout_marginLeft="@dimen/fab_margin"
+        android:layout_marginRight="@dimen/fab_margin"/>
+
+    <Button
+        android:id="@+id/search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_purple"
+        android:text="@string/search"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addBookName"
+        android:textColor="@android:color/white"/>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/didyoumeantext"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search"
+        android:layout_marginTop="56sp"
+        android:text="@string/did_you_mean"
+        android:visibility="gone"
+        android:textColor="@android:color/holo_red_dark"
+        android:textSize="20sp"
+        android:fontFamily="casual"
+        />
     <TextView
         android:id="@+id/booktitle"
         android:layout_width="wrap_content"
@@ -16,8 +69,9 @@
         android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="32dp"
+        android:textColor="@android:color/holo_purple"
+        android:textStyle="bold"
+        android:textSize="28sp"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -31,9 +85,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/booktitle"
         android:layout_centerInParent="true"
-        android:fontFamily="casual"
         android:textAlignment="center"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@android:color/darker_gray"
         android:textSize="24sp"
         android:textStyle="bold"
         android:visibility="gone"
@@ -41,35 +94,11 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/booktitle" />
 
-    <EditText
-        android:id="@+id/addBookName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/fab_margin"
-        android:hint="@string/enter_book_name_hint"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
 
-    <Button
-        android:id="@+id/search"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:text="@string/search"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addBookName" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/didyoumeantext"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search"
-        android:layout_marginTop="@dimen/fab_margin"
-        android:text="@string/did_you_mean"
-        android:visibility="gone"
-        />
+
+
+
+
 
 </android.support.constraint.ConstraintLayout>

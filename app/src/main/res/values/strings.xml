@@ -1,13 +1,18 @@
 <resources>
-    <string name="app_name">ReadThemAll</string>
+    <string name="app_name">Let\'s Read Them All!</string>
     <string name="action_settings">Settings</string>
     <string name="enter_book_name_hint">Enter Book Name</string>
     <string name="search">Search</string>
     <string name="cancel">Cancel</string>
     <string name="search_dialog_title">Search for a Book!</string>
     <string name="did_you_mean">Did you mean?</string>
-    <string name="book_moved_text">Book moved to the Read list!</string>
+    <string name="book_moved_text">Yay! You finished this book!</string>
     <string name="share">Share</string>
-    <string name="sharing_title">Hey! Checkout these books, awesome read!</string>
+    <string name="sharing_title">Hey! Checkout these books : </string>
+    <string name="undo">UNDO</string>
+    <string name="snackbar_text">Congrats! %1$s is checked off your reading list!</string>
+    <string name="details_title">Something about the book</string>
+    <string name="add_title">Go On! Add a new book</string>
+    <string name="find_book_text">Find your book?</string>
 
 </resources>

@@ -35,6 +35,7 @@ public class BookDetailsActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.book_details_layout);
+        setTitle(getResources().getString(R.string.details_title));
         //bookImage =(ImageView) findViewById(R.id.bookimage);
         toolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         b = getIntent().getExtras().getParcelable("BOOK_VAL");
