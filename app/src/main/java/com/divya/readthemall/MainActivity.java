@@ -17,6 +17,7 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.divya.readthemall.Model.AppDatabase;
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerItemTouch
     private LinearLayoutManager manager;
     private List<Book> booksData;
     private CoordinatorLayout coordinatorLayout;
+    private RelativeLayout layout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,10 +46,16 @@ public class MainActivity extends AppCompatActivity implements RecyclerItemTouch
         setSupportActionBar(toolbar);
         //text = (TextView) findViewById(R.id.testText);
         db = AppDatabase.getAppDatabase(getApplicationContext());
+        //db.bookDao().deleteAll();
+        layout = (RelativeLayout) findViewById(R.id.emptylayout);
         booklist = (RecyclerView) findViewById(R.id.booklist);
         manager = new LinearLayoutManager(this);
         booklist.setLayoutManager(manager);
         booksData = db.bookDao().getAllUnreadBooks();
+        if(booksData.size() > 0)
+        {
+            layout.setVisibility(View.INVISIBLE);
+        }
 
         adapter = new BookAdapter(booksData, this);
         booklist.setAdapter(adapter);
@@ -89,6 +97,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerItemTouch
             if(resultCode == Activity.RESULT_OK)
             {
                 booksData.add((Book)data.getExtras().getParcelable("BOOK_ADDED"));
+                layout.setVisibility(View.INVISIBLE);
                 adapter.notifyDataSetChanged();
             }
         }
@@ -109,10 +118,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerItemTouch
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        else if(id == R.id.action_share)
+         if(id == R.id.action_share)
         {
             Intent shareIntent = new Intent(Intent.ACTION_SEND);
             shareIntent.setType("text/plain");
@@ -151,6 +157,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerItemTouch
 
                     // undo is selected, restore the deleted item
                     adapter.restoreItem(deletedItem, deletedIndex);
+                    layout.setVisibility(View.INVISIBLE);
                     Book temp = db.bookDao().findBookByTitle(deletedItem.getBookTitle());
                     temp.setRead(false);
                     db.bookDao().update(temp);
@@ -158,6 +165,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerItemTouch
             });
             snackbar.setActionTextColor(Color.YELLOW);
             snackbar.show();
+            if(booksData.size() == 0)
+                layout.setVisibility(View.VISIBLE);
 //            booksData.remove(viewHolder.getAdapterPosition());
 //            adapter.notifyDataSetChanged();
 //            System.out.println("Divya size now " + db.bookDao().getAll().size());

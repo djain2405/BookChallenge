@@ -11,8 +11,11 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +32,7 @@ public class AddBookActivity extends FragmentActivity implements DownloadCallbac
 
     private EditText addName;
     private Button search;
+    private RelativeLayout layout;
     private TextView booktitle;
     private TextView authorname;
     private TextView didyoumean;
@@ -43,7 +47,9 @@ public class AddBookActivity extends FragmentActivity implements DownloadCallbac
         setContentView(R.layout.add_activity_layout);
         setTitle(getResources().getString(R.string.add_title));
         addName = (EditText) findViewById(R.id.addBookName);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         search = (Button) findViewById(R.id.search);
+
         db = AppDatabase.getAppDatabase(getApplicationContext());
 
         search.setOnClickListener(new View.OnClickListener() {
@@ -51,6 +57,8 @@ public class AddBookActivity extends FragmentActivity implements DownloadCallbac
             public void onClick(View view) {
                 System.out.println("Divya onClick called");
                 String bookname = addName.getText().toString();
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(addName.getWindowToken(), 0);
                 startDownload(bookname);
             }
         });
@@ -107,12 +115,15 @@ public class AddBookActivity extends FragmentActivity implements DownloadCallbac
 
     void displayBookName(final Book book)
     {
+        layout = (RelativeLayout) findViewById(R.id.bgsearch);
         booktitle = (TextView) findViewById(R.id.booktitle);
         authorname = (TextView) findViewById(R.id.author);
         didyoumean = (TextView) findViewById(R.id.didyoumeantext);
 
         booktitle.setText(book.getBookTitle());
         authorname.setText("By "+book.getAuthor());
+        layout = (RelativeLayout) findViewById(R.id.bgsearch);
+        layout.setVisibility(View.VISIBLE);
         booktitle.setVisibility(View.VISIBLE);
         authorname.setVisibility(View.VISIBLE);
         didyoumean.setVisibility(View.VISIBLE);

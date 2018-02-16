@@ -14,5 +14,8 @@
     <string name="details_title">Something about the book</string>
     <string name="add_title">Go On! Add a new book</string>
     <string name="find_book_text">Find your book?</string>
+    <string name="empty_title1">Hey There!</string>
+    <string name="empty_title2">Ready to read all those awesome books out there?</string>
+    <string name="empty_title3">Let\'s start by adding some of your unread books to this list. Click on the + button</string>
 
 </resources>
