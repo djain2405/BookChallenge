@@ -6,3 +6,5 @@ An Android App with the following functionality:
 4. The user can share the booklist with anyone through messaging apps.
 
 This App intends to motivate people to Read more books and create a Book Playlist.
+
+Available on Google Play Store https://play.google.com/store/apps/details?id=com.divya.readthemall
