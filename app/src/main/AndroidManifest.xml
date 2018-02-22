@@ -23,6 +23,7 @@
         </activity>
         <activity android:name=".AddBookActivity"/>
         <activity android:name=".BookDetailsActivity"/>
+        <activity android:name=".ReadBooksActivity"/>
 
     </application>
 

@@ -3,6 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.divya.readthemall.MainActivity">
     <item
+        android:id="@+id/action_settings"
+        app:showAsAction="ifRoom"
+        android:title="@string/action_settings"/>
+    <item
         android:id="@+id/action_share"
         app:showAsAction="ifRoom"
         android:title="@string/share"

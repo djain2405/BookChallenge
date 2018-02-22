@@ -117,8 +117,13 @@ public class MainActivity extends AppCompatActivity implements RecyclerItemTouch
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
+        if(id == R.id.action_settings)
+        {
+            Intent i = new Intent(this, ReadBooksActivity.class);
+            startActivity(i);
+        }
         //noinspection SimplifiableIfStatement
-         if(id == R.id.action_share)
+        else if(id == R.id.action_share)
         {
             Intent shareIntent = new Intent(Intent.ACTION_SEND);
             shareIntent.setType("text/plain");
