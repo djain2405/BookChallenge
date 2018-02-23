@@ -33,6 +33,9 @@ public interface BookDao {
     @Query("SELECT * FROM book WHERE book.isRead = 0")
     List<Book> getAllUnreadBooks();
 
+    @Query("SELECT * FROM book WHERE book.isRead = 1")
+    List<Book> getAllReadBooks();
+
     @Query("DELETE FROM book")
     void deleteAll();
 

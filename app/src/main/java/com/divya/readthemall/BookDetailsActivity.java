@@ -51,7 +51,7 @@ public class BookDetailsActivity extends AppCompatActivity {
 
     }
 
-    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap>
+    public class DownloadImageTask extends AsyncTask<String, Void, Bitmap>
     {
         ImageView bgImage;
 

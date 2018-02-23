@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerItemTouch
             layout.setVisibility(View.INVISIBLE);
         }
 
-        adapter = new BookAdapter(booksData, this);
+        adapter = new BookAdapter(booksData, this, false);
         booklist.setAdapter(adapter);
         decoration = new DividerItemDecoration(booklist.getContext(), manager.getOrientation());
         decoration.setDrawable(ContextCompat.getDrawable(this, R.drawable.divider_line));
