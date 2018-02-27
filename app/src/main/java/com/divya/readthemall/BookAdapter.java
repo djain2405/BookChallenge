@@ -52,7 +52,8 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.MyViewHolder> 
         final Book b = mybooklist.get(position);
         if(isRead == true)
         {
-            holder.img.setBackgroundColor(context.getResources().getColor(R.color.colorAccent));
+            new DownloadImageTask(holder.img).execute((b.getImgUrl()));
+            //holder.img.setBackgroundColor(context.getResources().getColor(R.color.colorAccent));
         }
         holder.title.setText(b.getBookTitle());
         holder.title.setOnClickListener(new View.OnClickListener() {

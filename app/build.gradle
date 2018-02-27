@@ -30,4 +30,5 @@ dependencies {
     annotationProcessor 'android.arch.persistence.room:compiler:1.0.0'
     testImplementation "android.arch.persistence.room:testing:1.0.0"
     compile 'com.android.support:support-annotations:+'
+    compile 'com.android.support:cardview-v7:26.1.0'
 }
